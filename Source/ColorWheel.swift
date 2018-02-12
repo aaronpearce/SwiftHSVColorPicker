@@ -11,7 +11,7 @@ public protocol ColorWheelDelegate: class {
     func hueAndSaturationSelected(_ hue: CGFloat, saturation: CGFloat)
 }
 
-public class ColorWheel: UIView {
+open class ColorWheel: UIView {
     var color: UIColor!
 
     // Layer for the Hue and Saturation wheel
@@ -24,20 +24,20 @@ public class ColorWheel: UIView {
     // Layer for the indicator
     var indicatorLayer: CAShapeLayer!
     var point: CGPoint!
-    var indicatorCircleRadius: CGFloat = 12.0
-    var indicatorColor: CGColor = UIColor.lightGray.cgColor
-    var indicatorBorderWidth: CGFloat = 2.0
+    public var indicatorCircleRadius: CGFloat = 12.0
+    public var indicatorColor: CGColor = UIColor.lightGray.cgColor
+    public var indicatorBorderWidth: CGFloat = 2.0
     
     // Retina scaling factor
     let scale: CGFloat = UIScreen.main.scale
     
-    weak var delegate: ColorWheelDelegate?
+    public weak var delegate: ColorWheelDelegate?
   
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder);
     }
     
-    init(frame: CGRect, color: UIColor!) {
+    public init(frame: CGRect, color: UIColor!) {
         super.init(frame: frame)
         
         self.color = color
@@ -63,16 +63,16 @@ public class ColorWheel: UIView {
         setViewColor(color);
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         indicatorCircleRadius = 18.0
         touchHandler(touches)
     }
     
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+    open override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         touchHandler(touches)
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         indicatorCircleRadius = 12.0
         touchHandler(touches)
     }
@@ -188,7 +188,7 @@ public class ColorWheel: UIView {
         return imageRef!
     }
     
-    func hueSaturationAtPoint(_ position: CGPoint) -> (hue: CGFloat, saturation: CGFloat) {
+    public func hueSaturationAtPoint(_ position: CGPoint) -> (hue: CGFloat, saturation: CGFloat) {
         // Get hue and saturation for a given point (x,y) in the wheel
         
         let c = wheelLayer.frame.width * scale / 2
@@ -220,7 +220,7 @@ public class ColorWheel: UIView {
         return CGPoint(x: x, y: y)
     }
     
-    func setViewColor(_ color: UIColor!) {
+    public func setViewColor(_ color: UIColor!) {
         // Update the entire view with a given color
         
         var hue: CGFloat = 0.0, saturation: CGFloat = 0.0, brightness: CGFloat = 0.0, alpha: CGFloat = 0.0
@@ -235,7 +235,7 @@ public class ColorWheel: UIView {
         drawIndicator()
     }
     
-    func setViewBrightness(_ _brightness: CGFloat) {
+    public func setViewBrightness(_ _brightness: CGFloat) {
         // Update the brightness of the view
         
         var hue: CGFloat = 0.0, saturation: CGFloat = 0.0, brightness: CGFloat = 0.0, alpha: CGFloat = 0.0
