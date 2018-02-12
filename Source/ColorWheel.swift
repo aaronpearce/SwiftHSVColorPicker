@@ -7,11 +7,11 @@
 
 import UIKit
 
-protocol ColorWheelDelegate: class {
+public protocol ColorWheelDelegate: class {
     func hueAndSaturationSelected(_ hue: CGFloat, saturation: CGFloat)
 }
 
-class ColorWheel: UIView {
+public class ColorWheel: UIView {
     var color: UIColor!
 
     // Layer for the Hue and Saturation wheel
