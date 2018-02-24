@@ -65,7 +65,7 @@ open class ColorWheel: UIView {
     
     open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         indicatorCircleRadius = 18.0
-        touchHandler(touches)
+//        touchHandler(touches) // This causes the view to reset stupidly
     }
     
     open override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -75,6 +75,10 @@ open class ColorWheel: UIView {
     open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         indicatorCircleRadius = 12.0
         touchHandler(touches)
+        
+        // Notify delegate of the new Hue and Saturation
+        var color = hueSaturationAtPoint(CGPoint(x: point.x*scale, y: point.y*scale))
+        delegate?.hueAndSaturationSelected(color.hue, saturation: color.saturation)
     }
     
     func touchHandler(_ touches: Set<UITouch>) {
@@ -91,9 +95,6 @@ open class ColorWheel: UIView {
         }
         
         self.color = UIColor(hue: color.hue, saturation: color.saturation, brightness: self.brightness, alpha: 1.0)
-        
-        // Notify delegate of the new Hue and Saturation
-        delegate?.hueAndSaturationSelected(color.hue, saturation: color.saturation)
         
         // Draw the indicator
         drawIndicator()
