@@ -68,12 +68,21 @@ open class ColorWheel: UIView {
 //        touchHandler(touches) // This causes the view to reset stupidly
     }
     
+    var hasMoved = false
     open override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        hasMoved = true
         touchHandler(touches)
     }
     
     open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         indicatorCircleRadius = 12.0
+
+        // Disables single tap by accident on tvOS
+        #if os(tvOS)
+        guard hasMoved else { return }
+        #endif
+
+        hasMoved = false
         touchHandler(touches)
         
         // Notify delegate of the new Hue and Saturation
